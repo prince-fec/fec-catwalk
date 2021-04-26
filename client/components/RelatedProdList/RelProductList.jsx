@@ -47,7 +47,7 @@ class RelProductList extends React.Component {
   handleRelatedProductUpdates(id) {
     axios.get(`/products/${id}/related`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         $('.related-list').animate({ left: '0' }, { duration: 400 });
         this.setState({
           rel_products: response.data

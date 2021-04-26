@@ -3,8 +3,8 @@ import React from 'react';
 // eslint-disable-next-line no-unused-vars
 // import css from './Overview.css'
 
-const Thumbnail = ({ thumbnailClick, thumbnailIndex, thumb, currentThumbnail, product, placeholder }) => {
-  return thumb.thumbnail_url ? (
+const Thumbnail = ({ thumbnailClick, thumbnailIndex, thumb, currentThumbnail, product, placeholder, thumbnailsShown }) => {
+  return thumb.thumbnail_url && thumbnailIndex >= thumbnailsShown[0] && thumbnailIndex < thumbnailsShown[1]  ? (
 
     <img
     onClick={() => thumbnailClick(thumbnailIndex, thumb.thumbnail_url)}
@@ -18,7 +18,7 @@ const Thumbnail = ({ thumbnailClick, thumbnailIndex, thumb, currentThumbnail, pr
 
   ) :
   (
-    <div></div>
+    <></>
   )
 }
 

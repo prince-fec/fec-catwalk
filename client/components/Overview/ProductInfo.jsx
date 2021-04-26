@@ -105,7 +105,6 @@ class ProductInfo extends React.Component {
       count+=entry.quantity
       return <option key={key} value={entry.size}>{entry.size}</option>
     })
-    console.log(this.props.averageScore)
     return product && styles[currentStyle] ?
     (
       <div className={productInformationClass}>

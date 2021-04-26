@@ -40,8 +40,8 @@ const ImageDisplay = ({ thumbnails, thumbnailsShown, styles, currentStyle, curre
           <div></div>
         }
         {
-          thumbnails.slice(thumbnailsShown[0], thumbnailsShown[1]).map((thumb, idx) => {
-            return <Thumbnail placeholder={placeholder} thumbnailIndex={idx} product={product} currentThumbnail={currentThumbnail} thumbnailClick={handleThumbnailClick} thumb={thumb} key={idx} />
+          thumbnails.map((thumb, idx) => {
+            return <Thumbnail placeholder={placeholder} thumbnailIndex={idx} product={product} thumbnailsShown={thumbnailsShown} currentThumbnail={currentThumbnail} thumbnailClick={handleThumbnailClick} thumb={thumb} key={thumb.thumbnail_url} />
           })
         }
         {

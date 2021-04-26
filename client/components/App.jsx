@@ -38,7 +38,6 @@ class App extends React.Component {
     const CHOSEN_THEME = this.state.theme_status;
     const Theme = CHOSEN_THEME === 'light' ? <LightTheme /> : <DarkTheme />;
 
-    console.log('THEME: ', CHOSEN_THEME);
 
     const ThemeSelector = () => {
       return (
@@ -103,7 +102,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.averageScore)
     var comparison = this.state.comparisonToggle ? this.state.comparisonToggle : <div></div>;
 
     var lightDarkBtn = this.state.theme_status === 'light' ? <button className='theme_control' onClick={this.switchTheme}>Light Mode</button> : <button className='theme_control' onClick={this.switchTheme}>Dark Mode</button>;

@@ -37,8 +37,7 @@ class Overview extends React.Component{
     if (this.state.thumbnailsShown[1] < this.state.thumbnails.length) {
       const diff = this.state.thumbnails.length - this.state.thumbnailsShown[1];
       this.setState({
-        thumbnailsShown: [diff, this.state.thumbnailsShown[1] + diff],
-        currentThumbnail: diff
+        thumbnailsShown: [this.state.thumbnailsShown[0] + 1, this.state.thumbnailsShown[1] + 1],
       })
     }
   }
@@ -47,8 +46,7 @@ class Overview extends React.Component{
     const diff = this.state.thumbnails.length - this.state.thumbnailsShown[0];
     if (this.state.thumbnailsShown[0] > 0) {
       this.setState({
-        thumbnailsShown: [0, diff],
-        currentThumbnail: 0
+        thumbnailsShown: [this.state.thumbnailsShown[0] - 1, this.state.thumbnailsShown[1] - 1],
       })
     }
   }
@@ -82,6 +80,7 @@ class Overview extends React.Component{
   }
 
   handleThumbnailClick(id) {
+    console.log(id)
     this.setState({
       currentThumbnail: id
     })
@@ -96,6 +95,7 @@ class Overview extends React.Component{
   fetchThumbnails() {
     axios.get(`/product/${this.props.product.id}/styles`)
       .then(response => {
+        console.log(response.data.results)
         this.setState({
           styles: response.data.results,
           thumbnails: response.data.results[this.state.currentStyle].photos,

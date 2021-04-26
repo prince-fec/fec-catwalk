@@ -39,7 +39,7 @@ class ReviewTiles extends React.Component {
         this.setState({
           reviews: response.data.results
         })
-        console.log(this.state.reviews)
+        // console.log(this.state.reviews)
       })
   }
 
