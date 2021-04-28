@@ -4,6 +4,7 @@ import $ from 'jquery';
 import RelProductCard from './RelProductCard.jsx';
 import MyOutfitCard from './MyOutfitCard.jsx';
 import css from './Related_Outfit.css';
+import withClick from './../HOC/WithClick.js'
 
 class RelProductList extends React.Component {
   constructor(props) {
@@ -136,4 +137,4 @@ class RelProductList extends React.Component {
 
 
 
-export default RelProductList;
+export default withClick(RelProductList);

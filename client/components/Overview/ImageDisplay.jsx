@@ -2,7 +2,7 @@
 import React from 'react';
 import Thumbnail from './Thumbnail.jsx';
 // eslint-disable-next-line no-unused-vars
-import css from './Overview.css'
+// import css from './Overview.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown, faArrowUp, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 // import CursorZoom from 'react-cursor-zoom';
@@ -28,7 +28,7 @@ const ImageDisplay = ({ thumbnails, thumbnailsShown, styles, currentStyle, curre
   <div className={imageContainerClass}>
     {
       styles[currentStyle] ?
-      <img className='image-container__main-image' onError={addDefault} onClick={(e) => handleMainImageClick(e)} alt={product.name} src={styles[currentStyle].photos[currentThumbnail].url || placeholder} />
+      <img className='image-container__main-image' onError={addDefault} onClick={(e) => handleMainImageClick(e)} alt={product.name + 'main'} src={styles[currentStyle].photos[currentThumbnail].url || placeholder} />
       :
       <img alt='placeholder image' src={placeholder}
       />

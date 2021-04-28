@@ -13,7 +13,7 @@ const Thumbnail = ({ thumbnailClick, thumbnailIndex, thumb, currentThumbnail, pr
       {border: '2px solid', boxSizing: 'border-box', borderColor: '#de5499'} :
       {}
     } src={thumb.thumbnail_url || placeholder}
-    alt={product.name}
+    alt={product.name + 'style number' + thumbnailIndex}
     className='image-container__thumbnail' />
 
   ) :

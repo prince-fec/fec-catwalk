@@ -96,7 +96,7 @@ class ProductInfo extends React.Component {
   render() {
     const { product, styles, currentStyle, handleStyleClick, isExtendedView, numReviews} = this.props;
     const { name, default_price, category } = this.props.product
-    const { isDisabled, totalQuantity, selectedQuantity } = this.state;
+    const { isDisabled, totalQuantity } = this.state;
     const buttonClass = isDisabled ? 'checkout-input' : 'hvr-back-pulse checkout-input'
     const forgotSize = this.state.forgotSize ? 'forgotSize' : 'hidden-button'
     const productInformationClass = isExtendedView ? 'prod-info-extended' : 'product-information';
@@ -162,12 +162,12 @@ class ProductInfo extends React.Component {
                   {
                     style.photos[0].thumbnail_url ?
                     <>
-                    <img className='styles__photo hvr-glow' alt={style.name} onClick={() => handleStyleClick(idx)} src={style.photos[0].thumbnail_url}></img>
-                    <h6 onClick={() => handleStyleClick(idx)} >{style.name}</h6>
+                    <img className='styles__photo hvr-glow' alt='' onClick={() => handleStyleClick(idx)} src={style.photos[0].thumbnail_url}></img>
+                    <h5 onClick={() => handleStyleClick(idx)} >{style.name}</h5>
                     </>
                     :
                     <div className='styles__photo hvr-glow' onClick={() => handleStyleClick(idx)}>
-                      <h6 onClick={() => handleStyleClick(idx)} >{style.name}</h6>
+                      <h5 onClick={() => handleStyleClick(idx)} >{style.name}</h5>
                     </div>
                   }
 
