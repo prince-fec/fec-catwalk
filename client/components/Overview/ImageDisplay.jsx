@@ -24,20 +24,20 @@ const ImageDisplay = ({ thumbnails, thumbnailsShown, styles, currentStyle, curre
   const imageContainerClass = extendedView ? 'extended-image-container' : 'image-container';
   const leftRightIconClass = extendedView ? 'leftRightIcon-extended' : 'leftRightIcon'
 
-  return(
-  <div className={imageContainerClass}>
-    {
-      styles[currentStyle] ?
-      <img className='image-container__main-image' onError={addDefault} onClick={(e) => handleMainImageClick(e)} alt={product.name + 'main'} src={styles[currentStyle].photos[currentThumbnail].url || placeholder} />
-      :
-      <img alt='placeholder image' src={placeholder}
-      />
-    }
+  return (
+    <div className={imageContainerClass}>
+      {
+        styles[currentStyle] ?
+          <img className='image-container__main-image' onError={addDefault} onClick={(e) => handleMainImageClick(e)} alt={product.name} src={styles[currentStyle].photos[currentThumbnail].url || placeholder} />
+          :
+          <img alt='placeholder image' src={placeholder}
+          />
+      }
       <div className='image-container__thumbnail-container'>
         {
-        thumbnailsShown[0] > 0 ?
-          <FontAwesomeIcon className='image-container__arrow' onClick={() => onArrowUpClick()} icon={faArrowUp} /> :
-          <div></div>
+          thumbnailsShown[0] > 0 ?
+            <FontAwesomeIcon className='image-container__arrow' onClick={() => onArrowUpClick()} icon={faArrowUp} /> :
+            <div></div>
         }
         {
           thumbnails.map((thumb, idx) => {
@@ -46,8 +46,8 @@ const ImageDisplay = ({ thumbnails, thumbnailsShown, styles, currentStyle, curre
         }
         {
           thumbnailsShown[1] < thumbnails.length ?
-          <FontAwesomeIcon className='image-container__arrow' onClick={() => onArrowDownClick()} icon={faArrowDown} /> :
-          <div></div>
+            <FontAwesomeIcon className='image-container__arrow' onClick={() => onArrowDownClick()} icon={faArrowDown} /> :
+            <div></div>
         }
       </div>
       <div className={leftRightIconClass}>

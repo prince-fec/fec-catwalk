@@ -14,19 +14,22 @@ class Ans extends React.Component {
     this.handleAnswerReport = this.handleAnswerReport.bind(this);
   }
 
-  handleAnswerHelpful (answerid) {
+  handleAnswerHelpful(answerid) {
     if (this.state.clickedHelpful === false) {
-      axios.put(`/qa/answers/${answerid}/helpful`, {question_id: this.props.questionId})
-        .then ((data) => {
+      axios.put(`/qa/answers/${answerid}/helpful`, { question_id: this.props.questionId })
+        .then((data) => {
           this.props.updateAns(data.data.results);
           this.setState({
             clickedHelpful: true
           })
         })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
-  handleAnswerReport (answerid) {
+  handleAnswerReport(answerid) {
     if (this.state.report === 'Report') {
       axios.put(`/qa/answers/${answerid}/report`)
         .then(success => {
@@ -34,18 +37,23 @@ class Ans extends React.Component {
             report: 'Reported'
           })
         })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
-  render () {
-    return(
+  render() {
+    const divClassName = this.props.ans.answerer_name === 'seller' ? 'seller' : 'normal'
+    return (
       <div className='ans'>
-          <div className='answer'>{this.props.ans.body}</div>
-          <div className='ans-info'>
-          {this.props.ans.answerer_name === 'seller' ? <div className='seller'>by {this.props.ans.answerer_name}, {moment(this.props.ans.date, "YYYY-MM-DD").format('LL')}</div> : <div>by {this.props.ans.answerer_name}, {moment(this.props.ans.date, "YYYY-MM-DD").format('LL')}</div>}
+        <div className='answer'>{this.props.ans.body}</div>
+        {/* {this.props.ans.photos.length > 0 ? <img></img> : null} */}
+        <div className='ans-info'>
+          <div className='ans-sec'> by <div id={divClassName}>{this.props.ans.answerer_name}</div>, {moment(this.props.ans.date, "YYYY-MM-DD").format('LL')}</div>
           <div>Helpful? <span onClick={() => this.handleAnswerHelpful(this.props.ans.answer_id)}>Yes</span>({this.props.ans.helpfulness})</div>
           <div onClick={() => this.handleAnswerReport(this.props.ans.answer_id)}>{this.state.report}</div>
-          </div>
+        </div>
       </div>
     )
   }

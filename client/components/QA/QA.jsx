@@ -16,7 +16,7 @@ import withClick from './../HOC/WithClick.js';
 class QA extends React.Component {
   constructor(props) {
     super(props)
-    this.state ={
+    this.state = {
       data: [],
       useData: [],
       amount: 2,
@@ -27,9 +27,10 @@ class QA extends React.Component {
     this.handleMoreQuestions = this.handleMoreQuestions.bind(this);
     this.handleClicked = this.handleClicked.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.resetData = this.resetData.bind(this);
   }
 
-  handleQuestions () {
+  handleQuestions() {
     axios.get(`/qa/questions/${this.props.productId}/100`)
       .then(response => {
         this.setState({
@@ -37,21 +38,24 @@ class QA extends React.Component {
           useData: response.data
         })
       })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.productId !== prevProps.productId){
+    if (this.props.productId !== prevProps.productId) {
       this.handleQuestions();
     }
   }
 
   handleMoreQuestions() {
     var add = this.state.amount
-    if (this.state.amount >= this.state.data.length){
+    if (this.state.amount >= this.state.data.length) {
       this.setState({
         more: false
       })
-    } else if (this.state.amount + 1 === this.state.data.length){
+    } else if (this.state.amount + 1 === this.state.data.length) {
       this.setState({
         amount: add + 2,
         more: false
@@ -64,35 +68,40 @@ class QA extends React.Component {
 
   }
 
-  handleClicked (boolean) {
+  handleClicked(boolean) {
     this.setState({
       clicked: boolean
     })
   }
 
-  handleUpdate (data) {
+  handleUpdate(data) {
     this.setState({
       data: data
     })
   }
 
+  resetData() {
+    this.setState({
+      data: this.state.useData
+    })
+  }
 
 
   render() {
-   return (
-    <div className='QA-ctn'>
-    <span className='main-heading'>QUESTIONS &#38; ANSWERS</span>
-    <br></br>
-    <QuestionBar questions={this.state.useData} update={this.handleUpdate}/>
-    <br></br>
-    {this.state.data.length > 0 ? <QuestionList name={this.props.name} productId={this.props.productId} questions={this.state.data.slice(0,this.state.amount)} update={this.handleUpdate}/> : null}
-    <div className='button'>
-    {this.state.data.length > 2 && this.state.more ? <button className='button1' onClick={this.handleMoreQuestions}>MORE ANSWERED QUESTIONS</button> : null}
-    <button className='button2' onClick={() => this.handleClicked(true)}>ADD A QUESTION</button>
-    </div>
-    {this.state.clicked ? <AddQuestion name={this.props.name} id={this.props.productId} close={this.handleClicked}/> : null}
-  </div>
-   )
+    return (
+      <div className='QA-ctn'>
+        <span className='main-heading'>QUESTIONS &#38; ANSWERS</span>
+        <br></br>
+        <QuestionBar questions={this.state.useData} update={this.handleUpdate} reset={this.resetData} />
+        <br></br>
+        {this.state.data.length > 0 ? <QuestionList name={this.props.name} productId={this.props.productId} questions={this.state.data.slice(0, this.state.amount)} update={this.handleUpdate} /> : null}
+        <div className='button'>
+          {this.state.data.length > 2 && this.state.more ? <button className='button1' onClick={this.handleMoreQuestions}>MORE ANSWERED QUESTIONS</button> : null}
+          <button className='button2' onClick={() => this.handleClicked(true)}>ADD A QUESTION</button>
+        </div>
+        {this.state.clicked ? <AddQuestion name={this.props.name} id={this.props.productId} close={this.handleClicked} update={this.handleUpdate} /> : null}
+      </div>
+    )
   }
 }
 

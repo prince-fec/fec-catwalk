@@ -24,7 +24,7 @@
 
 .innerForm {
   width: 500px;
-  height: auto;
+  height: 400px;
   padding: 1em;
   background-color: white;
   border-radius: 5px;
@@ -40,8 +40,29 @@
   margin-bottom: 1em;
 }
 
+.innerForm-submitted {
+  width: 450px;
+  height: 300px;
+  padding: 1em;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content:space-around; */
+  align-items: center;
+}
+.form-img-submitted {
+  width:200px;
+  height: 200px;
+}
+
 .submit {
   align-self: center;
+    margin: 1em;
+    border-radius: inherit;
+    width: 60px;
+    height: 30px;
+    background-color: palevioletred;
 }
 
 .textbox {
@@ -189,6 +210,13 @@
   color: #696969;
 }
 
+.no-ans {
+  height: 100px;
+  overflow: scroll;
+  color: grey;
+  margin-left: 1em;
+}
+
 .load-ans {
   font-size: 9px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -240,6 +268,18 @@
   text-decoration: underline;
 }
 
-.seller {
+#seller {
+  margin-left: 0.4em;
   font-weight: 800;
+  color: black;
+}
+
+#normal {
+margin-left: 0.4em;
+}
+
+.ans-sec {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

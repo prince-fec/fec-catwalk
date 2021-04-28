@@ -10,7 +10,8 @@ class AddQuestion extends React.Component {
       nickname: '',
       nicknameError: '',
       email: '',
-      emailError: ''
+      emailError: '',
+      submit: false
     }
 
     this.handleQuestion = this.handleQuestion.bind(this);
@@ -73,13 +74,15 @@ class AddQuestion extends React.Component {
         email: this.state.email,
         product_id: this.props.id
       })
-        .then(success => {
+        .then(data => {
           console.log('Successfully sent post request')
           this.setState({
             question: '',
             nickname: '',
-            email: ''
+            email: '',
+            submit: true
           })
+          this.props.update(data.data)
         })
         .catch((err) => {
           console.log('Failed to send post request' + err)
@@ -90,7 +93,13 @@ class AddQuestion extends React.Component {
   render () {
     return (
       <form className='questionform' onSubmit={(e) => this.handleSubmit(e)}>
-        <div className='innerForm'>
+        {this.state.submit ? <div className='innerForm-submitted'>
+          <div className='close' onClick={() => this.props.close(false)}>+</div>
+          <div className='form-title'>Your Question has been submitted !</div>
+          <div className='mini-title'>Thanks for visiting!</div>
+          <img className='form-img-submitted' src='./../../../assets/Catwalk.svg'></img>
+          </div>
+        : <div className='innerForm'>
         <div className='close' onClick={() => this.props.close(false)}>+</div>
         <div className='form-title'>Ask Your Question</div>
         <div className='mini-title'>About the {this.props.name}</div>
@@ -111,7 +120,8 @@ class AddQuestion extends React.Component {
         </label>
 
         <input className='submit' type="submit" ></input>
-        </div>
+        </div>}
+
       </form>
     )
   }

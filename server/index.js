@@ -24,7 +24,8 @@ app.get('/products', (req, res) => {
       console.log(response.data)
     })
     .catch((err) => {
-      console.log(err);
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -35,7 +36,9 @@ app.get('/product/:productId/styles', (req, res) => {
       res.json(response.data)
     })
     .catch((err) => {
-      console.log(err);
+
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -49,8 +52,8 @@ app.get('/qa/questions/:product_id/:count', (req, res) => {
       res.json(sorted)
     })
     .catch((err) => {
-      console.log('Error with Questions get request' + err)
-      res.end()
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -61,8 +64,8 @@ app.get('/qa/answers/:question_id/answers', (req, res) => {
       res.json(helperfunction.sortAnswer(response.data.results));
     })
     .catch((err) => {
-      console.log('Error with Answers get request' + err)
-      res.end();
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 app.get('/reviews/:product_Id', (req, res) => {
@@ -71,7 +74,8 @@ app.get('/reviews/:product_Id', (req, res) => {
       res.json(response.data)
     })
     .catch((err) => {
-      console.log(err)
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -81,7 +85,8 @@ app.get('/reviews/meta/:product_id', (req, res) => {
       res.json(response.data)
     })
     .catch((err) => {
-      console.log(err)
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -92,7 +97,8 @@ app.get('/reviews/:product_Id/:sort', (req, res) => {
       res.json(response.data)
     })
     .catch((err) => {
-      console.log(err)
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -103,11 +109,11 @@ app.post('reviews/:product_Id', (req, res) => {
       res.json(response.data)
     })
     .catch((err) => {
-      // console.log(err)
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
-// console.log(req.params);
 
 app.put('/qa/questions/:question_id/helpful', (req, res) => {
   //helpful-question
@@ -121,13 +127,13 @@ app.put('/qa/questions/:question_id/helpful', (req, res) => {
           res.json(sorted)
         })
         .catch((err) => {
-          console.log('Error with Questions get request' + err)
-          res.end()
+          res.status(err.response.status);
+          res.send(err.response.statusText);
         })
     })
     .catch((err) => {
-      console.log('error')
-      res.end(err)
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 app.get('/products/:product_id/related', (req, res) => {
@@ -146,7 +152,8 @@ app.get('/products/:product_id/related', (req, res) => {
       })
     })
     .catch((err) => {
-      console.log(err);
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -154,56 +161,77 @@ app.post('/qa/questions', (req, res) => {
   //post question form
   axios.post(`${requests.questions}`, req.body)
     .then(success => {
-      console.log('sucessfully sent post')
-      res.end();
+      axios.get(`${requests.questions}?product_id=${req.body.product_id}&count=100`)
+        .then((response) => {
+          var sorted = response.data.results.sort(function (a, b) {
+            return b.question_helpfulness - a.question_helpfulness
+          })
+          res.json(sorted)
+        })
+        .catch((err) => {
+          console.log('Error with Questions get request')
+          res.end()
+        })
     })
     .catch(err => {
-      console.log('error with post request' + err)
-      res.end()
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
 app.post('/qa/questions/:question_id/answers', (req, res) => {
   //post answer form
-  axios.post(`${requests.questions}/${req.params.question_id}/answers`, req.body)
+  var obj = {
+    body: req.body.body,
+    name: req.body.name,
+    email: req.body.email,
+    photos: req.body.photos
+  }
+  axios.post(`${requests.questions}/${req.params.question_id}/answers`, obj)
     .then(success => {
-      console.log('successful sent answer')
-      res.end();
+      axios.get(`${requests.questions}/${req.body.questionId}/answers`)
+        .then((response) => {
+          res.json(helperfunction.sortAnswer(response.data.results));
+        })
+        .catch((err) => {
+          console.log('Error with Answers get request')
+          res.end();
+        })
     })
     .catch(err => {
-      console.log('error sending answer' + err)
-      res.end();
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
 app.put('/qa/answers/:answer_id/helpful', (req, res) => {
   //helpful-answers
   axios.put(`${requests.answers}/${req.params.answer_id}/helpful`)
-    .then(() => {
+    .then((data) => {
       axios.get(`${requests.questions}/${req.body.question_id}/answers`)
         .then((response) => {
           res.json(response.data)
         })
         .catch((err) => {
-          console.log('Error with Answers get request' + err)
-          res.end();
+          res.status(err.response.status);
+          res.send(err.response.statusText);
         })
     })
-    .catch(err => {
-      console.log('error updating answer helpfulness')
-      res.end();
+    .catch((err) => {
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
 app.put('/qa/questions/:question_id/report', (req, res) => {
-  axois.put(`${requests.questions}/${req.params.question_id}/report`)
+  axios.put(`${requests.questions}/${req.params.question_id}/report`)
     .then(success => {
       console.log('successfully reported question')
       res.end();
     })
     .catch(err => {
-      console.log('error in reporting question')
-      res.end();
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -214,8 +242,8 @@ app.put('/qa/answers/:answer_id/report', (req, res) => {
       res.end();
     })
     .catch(err => {
-      console.log('error in reporting answer')
-      res.end();
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -228,7 +256,8 @@ app.get('/products/:product_id/info', (req, res) => {
       res.send(response.data);
     })
     .catch((err) => {
-      console.log(err);
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -236,6 +265,10 @@ app.get('/cart', (req, res) => {
   axios.get(requests.cart)
     .then(response => {
       res.json(response.data)
+    })
+    .catch((err) => {
+      res.status(err.response.status);
+      res.send(err.response.statusText);
     })
 })
 
@@ -245,11 +278,13 @@ app.post('/cart', (req, res) => {
     .then(response => {
       res.json(response.data)
     })
+    .catch((err) => {
+      res.status(err.response.status);
+      res.send(err.response.statusText);
+    })
 })
 
 app.post('/products/:product/outfits', (req, res) => {
-
-  // console.log(req.params);
   var outfitNum = parseInt(req.params.product);
   var arr = [];
   if (!tempOutfitList.includes(outfitNum)) {
@@ -264,9 +299,9 @@ app.post('/products/:product/outfits', (req, res) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        res.status(err.response.status);
+        res.send(err.response.statusText);
       })
-    // res.sendStatus(200);
   })
 })
 
@@ -281,11 +316,33 @@ app.get('/products/outfits', (req, res) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        res.status(err.response.status);
+        res.send(err.response.statusText);
       })
-    // res.sendStatus(200);
+
   })
-  // res.sendStatus(200);
+
+})
+
+app.delete('/products/:product/outfits', (req, res) => {
+  var arr = [];
+  var index = tempOutfitList.indexOf(parseInt(req.params.product));
+  tempOutfitList.splice(index, 1);
+  if (tempOutfitList.length !== 0) {
+    axios.get(`${requests.products}/${id}`)
+      .then((response) => {
+        arr.push(response.data);
+        if (arr.length === tempOutfitList.length) {
+          res.json(arr);
+        }
+      })
+      .catch((err) => {
+        res.status(err.response.status);
+        res.send(err.response.statusText);
+      })
+  } else {
+    res.json(arr);
+  }
 })
 
 app.listen(port, () => {

@@ -19,17 +19,20 @@ class Review extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.item !== prevProps.item) {
-      this.setState({productId: prevProps.item});
+      this.setState({ productId: prevProps.item });
       this.fetchReviews();
     }
   }
 
-  fetchReviews () {
+  fetchReviews() {
     axios.get(`/reviews/${this.props.item}`)
       .then((response) => {
         this.setState({
           reviews: response.data
         })
+      })
+      .catch((err) => {
+        console.log(err);
       });
 
   }
@@ -37,9 +40,9 @@ class Review extends React.Component {
   render() {
     return (
       <div className='review'>
-        <ReviewSummary data={this.props.item} getScore={this.props.getScore}/>
+        <ReviewSummary data={this.props.item} getScore={this.props.getScore} />
         <div id='review-line-two'>
-          <ReviewsList data={this.state.reviews}/>
+          <ReviewsList data={this.state.reviews} />
         </div>
       </div>
     )

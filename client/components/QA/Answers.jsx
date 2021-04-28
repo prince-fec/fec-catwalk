@@ -18,27 +18,30 @@ class Answers extends React.Component {
 
   getAnswers() {
     axios.get(`/qa/answers/${this.props.questionId}/answers`)
-    .then(response => {
-      this.setState ({
-        answers: response.data
+      .then(response => {
+        this.setState({
+          answers: response.data
+        })
       })
-    })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  componentDidMount () {
-      this.getAnswers();
+  componentDidMount() {
+    this.getAnswers();
   }
 
-  handleMoreQuestions () {
-    if (this.state.load === 'LOAD MORE ANSWERS'){
+  handleMoreQuestions() {
+    if (this.state.load === 'LOAD MORE ANSWERS') {
       this.setState({
         i: this.state.answers.length,
-        load : 'COLLAPSE ANSWERS'
+        load: 'COLLAPSE ANSWERS'
 
       })
     }
 
-    if (this.state.load === 'COLLAPSE ANSWERS'){
+    if (this.state.load === 'COLLAPSE ANSWERS') {
       this.setState({
         i: 2,
         load: 'LOAD MORE ANSWERS'
@@ -46,7 +49,7 @@ class Answers extends React.Component {
     }
   }
 
-  updateAns (ans) {
+  updateAns(ans) {
     this.setState({
       answers: ans
     })
@@ -56,7 +59,7 @@ class Answers extends React.Component {
     return (
       <div className='test'>
 
-      <Answer answer={this.state.answers.slice(0,this.state.i)} questionId={this.props.questionId} updateAns={this.updateAns}/>
+        <Answer answer={this.state.answers.slice(0, this.state.i)} questionId={this.props.questionId} updateAns={this.updateAns} />
         {this.state.answers.length > 2 ? <div className='load-ans' onClick={this.handleMoreQuestions}>{this.state.load}</div> : null}
       </div>
 

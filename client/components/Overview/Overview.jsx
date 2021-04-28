@@ -8,7 +8,7 @@ import withClick from './../HOC/WithClick.js'
 
 import axios from 'axios';
 
-class Overview extends React.Component{
+class Overview extends React.Component {
   constructor(props) {
     super(props)
 
@@ -33,7 +33,7 @@ class Overview extends React.Component{
     this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
-// Arrow function account for only 14 icons - will need to adjust the logic for more item
+  // Arrow function account for only 14 icons - will need to adjust the logic for more item
   onArrowDownClick() {
     if (this.state.thumbnailsShown[1] < this.state.thumbnails.length) {
       // const diff = this.state.thumbnails.length - this.state.thumbnailsShown[1];
@@ -100,6 +100,9 @@ class Overview extends React.Component{
           thumbnails: response.data.results[this.state.currentStyle].photos,
         })
       })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   componentDidUpdate(prevProps) {
@@ -114,11 +117,14 @@ class Overview extends React.Component{
     }
   }
 
-  handleAddToCart(e, sku, quantity) {
+  handleAddToCart(e, sku) {
     e.preventDefault();
     axios.post('/cart', {sku}).then(() => {
       this.props.getCart()
     })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -128,22 +134,22 @@ class Overview extends React.Component{
     const overviewProps = { thumbnails, thumbnailsShown, styles, currentStyle, currentThumbnail, handleThumbnailClick, onArrowDownClick, onArrowLeftClick, onArrowRightClick, onArrowUpClick, product, handleMainImageClick, extendedView }
 
     return product ?
-    (
-      <div className='overview-container'>
-        <ImageDisplay {...overviewProps} />
-        <ProductInfo averageScore={productScore} numReviews={numReviews} isExtendedView={extendedView} product={product} styles={styles} currentStyle={currentStyle} handleStyleClick={handleStyleClick} handleAddToCart={handleAddToCart}/>
-        <div className='description-container'>
-          <h4>{product.slogan}</h4>
-          <h5>{product.description}</h5>
+      (
+        <div className='overview-container'>
+          <ImageDisplay {...overviewProps} />
+          <ProductInfo averageScore={productScore} numReviews={numReviews} isExtendedView={extendedView} product={product} styles={styles} currentStyle={currentStyle} handleStyleClick={handleStyleClick} handleAddToCart={handleAddToCart} />
+          <div className='description-container'>
+            <h4>{product.slogan}</h4>
+            <h5>{product.description}</h5>
+          </div>
         </div>
-      </div>
-    )
-    :
-    (
-    <div>
-      <span>Sorry no products selected</span>
-    </div>
-    )
+      )
+      :
+      (
+        <div>
+          <span>Sorry no products selected</span>
+        </div>
+      )
   }
 }
 
