@@ -23,8 +23,6 @@
   z-index: 100;
 }
 
-
-
 .innerForm {
   width: 500px;
   height: 400px;
@@ -285,4 +283,8 @@ margin-left: 0.4em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.highlight {
+
 }

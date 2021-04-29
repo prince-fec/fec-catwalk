@@ -134,7 +134,7 @@ class AddAnswer extends React.Component {
           <div className='close' onClick={() => this.props.close(false)}>+</div>
           <div className='form-title'>Your Answer has been submitted !</div>
           <div className='mini-title'>Thanks for visiting!</div>
-          <img className='form-img-submitted' src='./../../../assets/Catwalk.svg'></img>
+          <img className='form-img-submitted' src='./../../../assets/Catwalk.svg' alt='catwalk logo'></img>
           </div> :  <div className='innerForma'>
         <div className='close' onClick={() => this.props.close(false)}>+</div>
         <div className='form-title'>{this.state.submit}</div>
