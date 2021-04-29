@@ -9,26 +9,32 @@ class QuestionBar extends React.Component {
     }
     this.handleSearch = this.handleSearch.bind(this);
     this.highlightText = this.highlightText.bind(this);
+    this.unHighLight = this.unHighLight.bind(this);
   }
 
   highlightText (text) {
-    var inputText = document.getElementsByClassName("question");
+    var questions = document.getElementsByClassName("question");
+    var inputText = Array.prototype.slice.call(questions)
 
-    for (var i = 0; i < inputText.length; i++){
-      var question = inputText[i].innerHTML;
+    inputText.map((body)=> {
+      var question = body.innerHTML;
       var index = question.indexOf(text);
       if (index !== -1) {
-        var insert = question.substring(0, index) + "<span className='highlight'>"+ question.substring(index,index+text.length) + "</span>" + question.substring(index + text.length);
-        inputText.innerHTML = insert;
+        var insert = question.substring(0, index) + "<span id='highlight'>"+ question.substring(index,index+text.length) + "</span>" + question.substring(index + text.length);
+        body.innerHTML = insert
+        console.log(body)
+        return body;
       }
-    }
-    console.log(inputText.innerHTML)
+    })
+
   }
+
+
 
   handleSearch (event) {
 
     if (event.target.value.length > 3) {
-      this.highlightText(event.target.value);
+      // this.highlightText(event.target.value);
       var filtered = this.props.questions.filter((question)=> {
          return question.question_body.includes(event.target.value)
       })

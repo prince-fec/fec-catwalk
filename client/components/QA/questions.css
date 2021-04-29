@@ -285,6 +285,10 @@ margin-left: 0.4em;
   justify-content: space-between;
 }
 
-.highlight {
+#highlight {
+background-color: yellow !important;
+}
 
+#unhighlight {
+  background-color: none;
 }
