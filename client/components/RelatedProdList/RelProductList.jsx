@@ -86,8 +86,10 @@ class RelProductList extends React.Component {
     })
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.productId !== prevProps.productId) {
+  componentDidUpdate(prevProps, prevState) {
+    prevState = JSON.stringify(prevState);
+    var currentState = JSON.stringify(this.state);
+    if (currentState === prevState) {
       this.handleRelatedProductUpdates(this.props.productId);
       axios.get(`/products/outfits`)
         .then((response) => {
