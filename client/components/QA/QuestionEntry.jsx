@@ -24,91 +24,93 @@ class QuestionEntry extends React.Component {
 
   getAnswers() {
     axios.get(`/qa/answers/${this.props.question.question_id}/answers`)
-    .then(response => {
-      this.setState ({
-        answers: response.data
-      })
-    })
-  }
-
-  componentDidMount () {
-      this.getAnswers();
-  }
-
-  componentDidUpdate (prevProps) {
-    if (this.props.question.question_id !== prevProps.question.question_id){
-      this.getAnswers();
-    }
-
-  }
-
-  handleReport () {
-    axios.put(`/qa/questions/${this.props.question.question_id}/report`)
-    .then(() => {
-      console.log('Reported')
-    })
-  }
-
-  handleHelpful (){
-    if (this.state.clickedHelpful === false){
-      axios.put(`/qa/questions/${this.props.question.question_id}/helpful`, {product_id: this.props.productId})
-      .then((data) => {
-        this.props.update(data.data)
+      .then(response => {
         this.setState({
-          clickedHelpful: true
+          answers: response.data
         })
       })
+  }
+
+  componentDidMount() {
+    this.getAnswers();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.question.question_id !== prevProps.question.question_id) {
+      this.getAnswers();
+    }
+
+  }
+
+  handleReport() {
+    axios.put(`/qa/questions/${this.props.question.question_id}/report`)
+      .then(() => {
+        console.log('Reported')
+      })
+  }
+
+  handleHelpful() {
+    if (this.state.clickedHelpful === false) {
+      axios.put(`/qa/questions/${this.props.question.question_id}/helpful`, { product_id: this.props.productId })
+        .then((data) => {
+          this.props.update(data.data)
+          this.setState({
+            clickedHelpful: true
+          })
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
-
-handleClickForm (boolean) {
-  this.setState({
-    clickedForm: boolean
-  })
-}
-
-handleMoreQuestions () {
-  if (this.state.load === 'LOAD MORE ANSWERS'){
+  handleClickForm(boolean) {
     this.setState({
-      i: this.state.answers.length,
-      load : 'COLLAPSE ANSWERS'
-
+      clickedForm: boolean
     })
   }
 
-  if (this.state.load === 'COLLAPSE ANSWERS'){
+  handleMoreQuestions() {
+    if (this.state.load === 'LOAD MORE ANSWERS') {
+      this.setState({
+        i: this.state.answers.length,
+        load: 'COLLAPSE ANSWERS'
+
+      })
+    }
+
+    if (this.state.load === 'COLLAPSE ANSWERS') {
+      this.setState({
+        i: 2,
+        load: 'LOAD MORE ANSWERS'
+      })
+    }
+  }
+
+  updateAns(ans) {
     this.setState({
-      i: 2,
-      load: 'LOAD MORE ANSWERS'
+      answers: ans
     })
   }
-}
-
-updateAns (ans) {
-  this.setState({
-    answers: ans
-  })
-}
 
   render() {
     return (
       <div>
-      <div className='question'>Q:{'  '+ this.props.question.question_body}</div>
-      <div className='questionLink'>
-      <div className='link-helpful'>helpful? <span onClick={this.handleHelpful}>Yes</span>({this.props.question.question_helpfulness}) </div>
-      <div className='link-answe' onClick={() => this.handleClickForm(true)}> Add Answer</div>
-      </div>
+        <div className='question'>Q:{this.props.question.question_body}</div>
+        <div className='questionLink'>
+          <div className='link-helpful'>helpful? <span onClick={this.handleHelpful}>Yes</span>({this.props.question.question_helpfulness}) </div>
+          <div className='link-answe' onClick={() => this.handleClickForm(true)}> Add Answer</div>
+        </div>
 
-      {this.state.clickedForm ? <AddAnswer question={this.props.question.question_body} questionId={this.props.question.question_id} name={this.props.name} close={this.handleClickForm} update={this.updateAns}/> : null}
-      <div className='ans-section'>
-      <div className='A'>A:</div>
-      <div className='test'>
-        {!this.state.answers.length ? <div className='no-ans'>No Answer for this Question. Try submitting an Answer!</div> : <Answer answer={this.state.answers.slice(0,this.state.i)} questionId={this.props.question.question_id} updateAns={this.updateAns}/>}
+        {this.state.clickedForm ? <AddAnswer question={this.props.question.question_body} questionId={this.props.question.question_id} name={this.props.name} close={this.handleClickForm} update={this.updateAns} /> : null}
+        <div className='ans-section'>
+          <div className='A'>A:</div>
+          <div className='test'>
+            {!this.state.answers.length ? <div className='no-ans'>No Answer for this Question. Try submitting an Answer!</div> : <Answer answer={this.state.answers.slice(0, this.state.i)} questionId={this.props.question.question_id} updateAns={this.updateAns} />}
 
-      {this.state.answers.length > 2 ? <div className='load-ans' onClick={this.handleMoreQuestions}>{this.state.load}</div> : null}
-      </div>
-      </div>
+            {this.state.answers.length > 2 ? <div className='load-ans' onClick={this.handleMoreQuestions}>{this.state.load}</div> : null}
+          </div>
+        </div>
       </div>
     )
 

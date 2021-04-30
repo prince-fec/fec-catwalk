@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import axios from 'axios';
 
-import QA from './QA/QA.jsx'
-import Review from './Review.jsx'
-//
+const QA = React.lazy(() => {
+  return import('./QA/QA.jsx')
+})
+const Review = React.lazy(() => {
+  return import('./Review.jsx')
+})
+
+// const RelProductList = React.lazy(() => import('./RelatedProdList/RelProductList.jsx'));
 import Overview from './Overview/Overview.jsx';
 import RelProductList from './RelatedProdList/RelProductList.jsx';
 import Navbar from './Navbar/Navbar.jsx'
@@ -22,7 +27,7 @@ class App extends React.Component {
       averageScore: 0,
       cart: [],
       numItemsInCart: 0,
-      theme_status: 'dark'
+      theme_status: 'light'
     }
     this.productStateChange = this.productStateChange.bind(this);
     this.comparisonToggle = this.comparisonToggle.bind(this);
@@ -37,9 +42,6 @@ class App extends React.Component {
 
     const CHOSEN_THEME = this.state.theme_status;
     const Theme = CHOSEN_THEME === 'light' ? <LightTheme /> : <DarkTheme />;
-
-    console.log('THEME: ', CHOSEN_THEME);
-
     const ThemeSelector = () => {
       return (
         <>
@@ -72,12 +74,16 @@ class App extends React.Component {
       currentProduct: data[0]
     })
     this.fetchCart()
+
   }
 
   componentDidMount() {
     axios.get('/products')
       .then((response) => {
         this.productStateChange(response.data)
+      })
+      .catch((err) => {
+        console.log(err);
       });
     this.fetchCart()
   }
@@ -85,16 +91,17 @@ class App extends React.Component {
   fetchCart() {
     axios.get('/cart')
       .then((response) => {
-        // console.log(response.data)
         this.setState({
           cart: response.data,
           numItemsInCart: response.data.length
         })
       })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   comparisonToggle(relatedProduct) {
-    // console.log(this.state.currentProduct);
     var status = !this.state.comparisonToggle ? <Comparison_Model toggleComparison={this.comparisonToggle} displayedProduct={this.state.currentProduct} relatedProduct={relatedProduct} /> : false;
 
     this.setState({
@@ -103,7 +110,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.averageScore)
     var comparison = this.state.comparisonToggle ? this.state.comparisonToggle : <div></div>;
 
     var lightDarkBtn = this.state.theme_status === 'light' ? <button className='theme_control' onClick={this.switchTheme}>Light Mode</button> : <button className='theme_control' onClick={this.switchTheme}>Dark Mode</button>;
@@ -121,11 +127,18 @@ class App extends React.Component {
             <Overview productScore={this.state.averageScore} numReviews={this.state.reviewCount} getCart={this.fetchCart} id='overview' product={this.state.currentProduct} />
           </section>
           <section aria-label="related-products" id="lists">
+
+
             <RelProductList id="related-products" productId={this.state.currentProduct.id} toggleComparison={this.comparisonToggle} changePage={this.productStateChange} />
+
           </section>
           <section aria-label="questions and ratings">
-            <QA id='qa' productId={this.state.currentProduct.id} name={this.state.currentProduct.name} />
-            <Review id='review' item={this.state.currentProduct.id} getScore={this.getScore} />
+            <Suspense fallback={<div>Loading</div>}>
+              <QA id='qa' productId={this.state.currentProduct.id} name={this.state.currentProduct.name} />
+            </Suspense>
+            <Suspense fallback={<div>Loading</div>}>
+              <Review id='review' item={this.state.currentProduct.id} getScore={this.getScore} />
+            </Suspense>
           </section>
         </div>
 

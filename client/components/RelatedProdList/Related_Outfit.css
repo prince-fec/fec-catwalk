@@ -1,29 +1,18 @@
-/* light pink: #eddcd9 */
-/* smokey white: #f2ebe9 */
-/* Hot pink: #de5499 */
-/* Blue: #266143 */
-/* yellow: #e99f4c */
 
 .view {
-  /* left: 15%; */
-  /* grid-column-start: line1; */
-
   position: relative;
-  /* max-width: 80%; */
   width:  100%;
-  /* min-width: 20%; */
   overflow: hidden;
   z-index: 1;
-  /* background: linear-gradient(90deg, rgba(255, 255, 255, 0) 80%, rgb(255, 255, 255, 1)); */
   mix-blend-mode:overlay;
 }
+
 .list {
   position: relative;
   max-width: 100%;
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  /* background: linear-gradient(90deg, rgba(255, 255, 255, 0) 80%, rgb(255, 255, 255, 1)); */
   z-index: -1;
 }
 
@@ -37,7 +26,6 @@
 .list-arrows {
   height: 24px;
   position: absolute;
-  /* background-color: #eddcd9; */
   border-radius: 5px;
   top: 60%;
   z-index: 1;
@@ -84,7 +72,6 @@
 .hvr-backward:hover, .hvr-backward:focus, .hvr-backward:active {
   -webkit-transform: translateX(-8px) rotate(180deg);
   transform: translateX(-8px) rotate(180deg);
-  /* transform: rotate(180deg); */
 }
 
 /*RELATED CARD */
@@ -103,18 +90,13 @@
   justify-content: center;
   align-items: center;
   z-index: -6;
-  /* color: #e99f4c ; */
-  /* color: #ed8d8d ; */
-  /* background: #f2ebe9; */
 }
 
 /* Related Card Effect */
 .hvr-float {
-  /* display: inline-block; */
   vertical-align: middle;
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
-  /* box-shadow: 0 0 1px rgba(0, 0, 0, 0); */
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   -webkit-transition-property: transform;
@@ -150,7 +132,7 @@
   justify-items: flex-start;
   align-self: flex-end;
   width: 20px;
-  z-index: -4;
+  z-index: 1;
 }
 
 .related-card-info {
@@ -177,26 +159,35 @@
 }
 
 .comparison-viewer {
-  position: sticky;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 1000px;
+  height: 3000px;
   border-radius: 5%;
   background-color: transparent;
   z-index: 10;
 }
 
-.comparison-table {
+.comparison-data {
   position: sticky;
   top: 20%;
   left: 50%;
-  width: 400px;
+  width: 500px;
   height: 300px;
   border: black 1px solid;
   padding: 15px;
   box-shadow: 5px 4px 30px .2px rgba(0, 0, 0, 0.178);
   background-color: rgb(230, 230, 230);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comparison-table {
+  table-layout: fixed;
+  width: 90%;
+  border-collapse: collapse;
 }
 
 .comparison-table-names {
@@ -204,22 +195,38 @@
   font-size: 1.2em;
 }
 
-.comparison-table-title {
-  font-weight: 300;
-  font-size: .8em;
+.comparison-table-names:nth-child(even) {
+  text-align: left;
+  width: 50%;
 }
 
 .comparison-table-related-product {
   text-align: right;
 }
 
-.comparison-table-feature {
-  font-weight: bold;
-  text-align: center;
+.comparison-title {
+  align-self: flex-start;
+  font-weight: 300;
+  font-size: .8em;
 }
 
-td {
-  padding: 0px;
+.comparison-info {
+  width: 90%;
+}
+
+.comparison-info-related-product {
+  text-align: right;
+  width: 25%;
+}
+
+.comparison-info-feature {
+  font-weight: bold;
+  text-align: center;
+  width: 30%;
+}
+
+.comparison-info-display-product {
+  width: 25%;
 }
 
 .outfit-card {

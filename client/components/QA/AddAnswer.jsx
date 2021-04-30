@@ -25,25 +25,25 @@ class AddAnswer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleAnswer (event) {
+  handleAnswer(event) {
     this.setState({
       answer: event.target.value
     })
   }
 
-  handleNickName (event) {
+  handleNickName(event) {
     this.setState({
       nickname: event.target.value
     })
   }
 
-  handleEmail (event) {
+  handleEmail(event) {
     this.setState({
       email: event.target.value
     })
   }
 
-  handlePhotos (event) {
+  handlePhotos(event) {
     var array = this.state.photos;
     if (event.target.files.length + this.state.photos.length > 5) {
       alert('Only 5 images allowed')
@@ -56,7 +56,7 @@ class AddAnswer extends React.Component {
     }
   }
 
-  validate () {
+  validate() {
     let message = 'You must enter the following';
     if (this.state.answer.length < 1) {
       this.setState({
@@ -79,8 +79,8 @@ class AddAnswer extends React.Component {
     return true
   }
 
-  handleThumbnail (files) {
-    for (var i = 0; i < files.length; i++){
+  handleThumbnail(files) {
+    for (var i = 0; i < files.length; i++) {
       var photo = document.createElement("img");
       photo.src = URL.createObjectURL(files[i]);
       var photoArr = this.state.photos
@@ -97,10 +97,10 @@ class AddAnswer extends React.Component {
     }
   }
 
-  handleSubmit () {
+  handleSubmit() {
     var isValid = this.validate();
 
-    if (isValid){
+    if (isValid) {
       axios.post(`/qa/questions/${this.props.questionId}/answers`, {
         body: this.state.answer,
         name: this.state.nickname,
@@ -109,20 +109,21 @@ class AddAnswer extends React.Component {
         questionId: this.props.questionId
 
       })
-      .then((data)=>{
-        this.setState({
-          submit: 'Answer Submitted!',
-          answer: '',
-          nickname: '',
-          email: '',
-          max: true,
-          submitted: true
+        .then((data) => {
+          this.setState({
+            submit: 'Answer Submitted!',
+            answer: '',
+            nickname: '',
+            email: '',
+            max: true,
+            submitted: true
+          })
+          this.props.update(data.data)
         })
-        this.props.update(data.data)
-      })
-      .catch(()=> {
-        console.log('Failed')
-      })
+        .catch((err) => {
+          console.log(err);
+          console.log('Failed')
+        })
     }
     event.preventDefault();
   }
@@ -141,25 +142,25 @@ class AddAnswer extends React.Component {
         <div className='mini-title'>{this.props.name} : {this.props.question}</div>
         <label>Answer*
           <div className='error'>{this.state.answerError}</div>
-        <textarea type='text' value={this.state.answer} onChange={this.handleAnswer} placeholder='add answer here...'></textarea>
-        </label>
-        <label>nickname*
+            <textarea type='text' value={this.state.answer} onChange={this.handleAnswer} placeholder='add answer here...'></textarea>
+          </label>
+          <label>nickname*
           <div className='error'>{this.state.nicknameError}</div>
-        <input type='text' value={this.state.nickname} onChange={this.handleNickName}></input>
-        </label>
-        <label>Email*
+            <input type='text' value={this.state.nickname} onChange={this.handleNickName}></input>
+          </label>
+          <label>Email*
           <div className='error'>{this.state.emailError}</div>
-        <input type='email' value={this.state.email} onChange={this.handleEmail}></input>
-        </label>
-        <label>Add image*
+            <input type='email' value={this.state.email} onChange={this.handleEmail}></input>
+          </label>
+          <label>Add image*
         {this.state.max ? null : <input className='file-btn' type='file' multiple onChange={this.handlePhotos}></input>}
-        </label>
-        <div id='thumbnail'>
-        </div>
-        <input className='submit' type='submit'></input>
+          </label>
+          <div id='thumbnail'>
+          </div>
+          <input className='submit' type='submit'></input>
         </div>}
 
-      </form>
+      </form >
     )
   }
 }

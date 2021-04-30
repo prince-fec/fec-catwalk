@@ -40,7 +40,7 @@ class ReviewSummary extends React.Component {
         this.props.getScore(this.state.scoresCount, this.state.score);
       })
       .catch((err) => [
-        // console.log(err)
+        console.log(err)
       ])
   }
 
@@ -104,31 +104,31 @@ class ReviewSummary extends React.Component {
     return (
       <div id='review-container'>
         <div id='review-summary'>
-        <h3>Ratings {'&'} Review</h3>
-        <h1 id='average-score'>{score.toFixed(2)}{' '}
-        <Rating rating={this.state.score} numberOfStars={5}
-        starSpacing="3px" starDimension="15px" starRatedColor='black'/></h1>
-        <p id='recommendations'>{trueCount.toFixed(0)}% of reviews recommend this product</p>
-        <div id='star-counts'>
-          <p><span id='summary-score-list'>5 stars </span>
-          <span id='score-count'>{this.state.scoreCounts[5]}</span></p>
-          <p><span id='summary-score-list'>4 stars </span>
-          <span id='score-count'>{this.state.scoreCounts[4]}</span></p>
-          <p><span id='summary-score-list'>3 stars </span>
-          <span id='score-count'>{this.state.scoreCounts[3]}</span></p>
-          <p><span id='summary-score-list'>2 stars </span>
-          <span id='score-count'>{this.state.scoreCounts[2] || 0}</span></p>
-          <p><span id='summary-score-list'>1 stars </span>
-          <span id='score-count'>{this.state.scoreCounts[1] || 0}</span></p>
-        </div>
-        <div id ='measurements'>
-          <div>{size}</div>
-          <div>{width}</div>
-          <div>{comfort}</div>
-          <div>{quality}</div>
-          <div>{length}</div>
-          <div>{fit}</div>
-        </div>
+          <h3>Ratings {'&'} Review</h3>
+          <h1 id='average-score'>{score.toFixed(2)}{' '}
+            <Rating rating={this.state.score} numberOfStars={5}
+              starSpacing="3px" starDimension="15px" starRatedColor='black' /></h1>
+          <p id='recommendations'>{trueCount.toFixed(0)}% of reviews recommend this product</p>
+          <div id='star-counts'>
+            <p><span id='summary-score-list'>5 stars </span>
+              <span id='score-count'>{this.state.scoreCounts[5]}</span></p>
+            <p><span id='summary-score-list'>4 stars </span>
+              <span id='score-count'>{this.state.scoreCounts[4]}</span></p>
+            <p><span id='summary-score-list'>3 stars </span>
+              <span id='score-count'>{this.state.scoreCounts[3]}</span></p>
+            <p><span id='summary-score-list'>2 stars </span>
+              <span id='score-count'>{this.state.scoreCounts[2] || 0}</span></p>
+            <p><span id='summary-score-list'>1 stars </span>
+              <span id='score-count'>{this.state.scoreCounts[1] || 0}</span></p>
+          </div>
+          <div id='measurements'>
+            <div>{size}</div>
+            <div>{width}</div>
+            <div>{comfort}</div>
+            <div>{quality}</div>
+            <div>{length}</div>
+            <div>{fit}</div>
+          </div>
         </div>
       </div>
     )

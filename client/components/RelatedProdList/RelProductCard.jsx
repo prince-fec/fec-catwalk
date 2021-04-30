@@ -7,11 +7,16 @@ class RelProductCard extends React.Component {
     super(props);
     this.state = {
       styleList: [],
-      currentStyle: {}
+      currentStyle: {},
+      styleAvg: 0,
+      remainingSeconds: 10,
+      pending: false,
+      error: null
     }
   }
   // var defaultStyle =
   handleUpdate(id) {
+    console.log('handled');
     axios.get(`/product/${id}/styles`)
       .then((response) => {
         this.setState({
@@ -23,27 +28,40 @@ class RelProductCard extends React.Component {
       .catch((err) => {
         console.log(err);
       })
+    axios.get(`/reviews/${id}`)
+      .then((response) => {
+        var avg = 0;
+        console.log('REVIEWS', response.data.results);
+        if (response.data.results.length === 0) {
+          return 0;
+        } else {
+          var counter = 0;
+          response.data.results.forEach((review) => {
+            avg += review.rating;
+            counter++;
+          })
+          return avg = avg / counter;
+        }
+      })
+      .then((result) => {
+        this.setState({
+          styleAvg: result
+        })
+      })
+      .catch((err) => { console.log(err) });
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
+
+    // console.log(prevProps.product.id);
+    if (prevProps.product.id !== this.props.product.id) {
       this.handleUpdate(this.props.product.id);
     }
   }
 
   componentDidMount() {
-    axios.get(`/product/${this.props.product.id}/styles`)
-      .then((response) => {
 
-        this.setState({
-          styleList: response.data.results,
-          currentStyle: response.data.results[0],
-          thumbnailImg: response.data.results[0].photos[0].url
-        })
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    this.handleUpdate(this.props.product.id);
   }
   render() {
     var { name, category, default_price } = this.props.product;
@@ -60,7 +78,11 @@ class RelProductCard extends React.Component {
 
     // Display conditions
     var price = !this.state.currentStyle.sale_price ? defPriceElement : saleElement;
-    var thumb = this.state.thumbnailImg ? <img src={this.state.thumbnailImg} alt={this.state.currentStyle.name} className='related-card-visual-thumbnail' /> : <img className='related-card-visual-thumbnail' src={`https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081`} alt='image is not found' />;
+    var thumb = this.state.thumbnailImg ? <img src={this.state.thumbnailImg} alt={this.state.currentStyle.name} className='related-card-visual-thumbnail' /> : <img className='related-card-visual-thumbnail' src={`https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081`} alt={this.state.currentStyle.name} />;
+
+    // var roundedAvg = this.state.styleAvg - Math.floor(this.state.styleAvg)
+    var review = this.state.styleAvg === 0 ? <h4 className='card-review'>No Reviews</h4> : <h4 className='card-review'>Review: {Math.round(this.state.styleAvg)}/5</h4>
+    // var review = <h4 className='card-review'>Review: {this.state.styleAvg}/5</h4>
 
     return (
       <div className='card hvr-float'>
@@ -71,16 +93,17 @@ class RelProductCard extends React.Component {
           // window.addEventListener('scroll', noScroll.module());
           this.props.toggleComparison(this.props.product, this.state.currentStyle);
         }}>
-          <img className='related-card-visual-star-default' src="https://img.icons8.com/windows/32/000000/star--v1.png" />
+          <img className='related-card-visual-star-default' src="https://img.icons8.com/windows/32/000000/star--v1.png" alt="compare products" />
           {thumb}
         </div>
         <div className='related-card-info'>
           <h4 className='related-card-info-category'>{category}</h4>
           <h3 className='related-card-info-name' onClick={(e) => {
+            window.scrollTo(0, 0);
             this.props.changePage([this.props.product]);
           }}>{name}</h3>
           {price}
-          <img />
+          {review}
         </div>
       </div>
     )

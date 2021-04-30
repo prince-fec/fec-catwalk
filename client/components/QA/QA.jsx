@@ -15,7 +15,7 @@ import Ans from './Ans.jsx'
 class QA extends React.Component {
   constructor(props) {
     super(props)
-    this.state ={
+    this.state = {
       data: [],
       useData: [],
       amount: 2,
@@ -31,7 +31,7 @@ class QA extends React.Component {
     this.handleLoadQuestion = this.handleLoadQuestion.bind(this);
   }
 
-  handleQuestions () {
+  handleQuestions() {
     axios.get(`/qa/questions/${this.props.productId}/100`)
       .then(response => {
         this.setState({
@@ -39,21 +39,24 @@ class QA extends React.Component {
           useData: response.data
         })
       })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.productId !== prevProps.productId){
+    if (this.props.productId !== prevProps.productId) {
       this.handleQuestions();
     }
   }
 
   handleMoreQuestions() {
     var add = this.state.amount
-    if (this.state.amount >= this.state.data.length){
+    if (this.state.amount >= this.state.data.length) {
       this.setState({
         more: false
       })
-    } else if (this.state.amount + 1 === this.state.data.length){
+    } else if (this.state.amount + 1 === this.state.data.length) {
       this.setState({
         amount: add + 2,
         more: false
@@ -66,19 +69,19 @@ class QA extends React.Component {
 
   }
 
-  handleClicked (boolean) {
+  handleClicked(boolean) {
     this.setState({
       clicked: boolean
     })
   }
 
-  handleUpdate (data) {
+  handleUpdate(data) {
     this.setState({
       data: data
     })
   }
 
-  resetData () {
+  resetData() {
     this.setState({
       data: this.state.useData
     })
