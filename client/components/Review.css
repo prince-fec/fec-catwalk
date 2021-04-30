@@ -1,9 +1,11 @@
 .review-rating {
-  color:red
+  color:red;
+  margin-top: 10px
 }
 
 #star-rating {
-  color:red
+  color:red;
+  margin-top: 10px;
 }
 
 #review-thumbnail {
@@ -20,13 +22,13 @@
   flex: 1 3 30%;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  width: 82%;
   height: 70%;
 }
 
 #review-line-two {
   display: flex;
   flex-direction: column;
+  width: 60%;
 }
 
 
@@ -66,7 +68,7 @@
 #review-form-top {
   display: inline-block;
   padding-left: 3%;
-
+  padding-top: 15px;
 }
 #review-radio {
   display: flex;
@@ -74,9 +76,6 @@
   padding-left: 3%;
 }
 
-#reviews {
-  width: 300px;
-}
 
 #review-input {
   display: flex;
@@ -87,8 +86,8 @@
 .buttons {
   display: flex;
   padding: 8px;
-  padding-right: 1em;
-  margin-left: 1em;
+  margin: -4px;
+  margin-right: 1em;
 }
 
 .average-score {
@@ -97,8 +96,36 @@
 
 .review-name-date {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 
+}
+
+#write {
+  padding: 8px;
+  margin-right: 13px;
+  background-color: white;
+  margin-bottom: 13px;
+  border: 1px solid pink;
+  padding: 15px
+}
+
+#show {
+  padding: 8px;
+  margin-right: 13px;
+  background-color: white;
+  margin-bottom: 13px;
+  border: 1px solid pink;
+  padding: 15px
+}
+
+.review-recommend {
+  margin-top: 10px;
+
+}
+
+.review-recommend {
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 #reviews {
@@ -108,4 +135,206 @@
 
 .review-list {
   padding: 4px;
+  padding-left: 32px;
+}
+
+.review-sum {
+  font-size: larger;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.review-helpfulness {
+  margin-top: 1px;
+}
+
+#review-input {
+  display: flex;
+  flex-direction: column;
+}
+
+#summary-field {
+  margin: 0px;
+  width: 500px;
+  height: 100px;
+}
+
+#body-field {
+  margin: 0px;
+  width: 500px;
+  height: 260px;
+}
+
+#email-field {
+  margin: 0px;
+  width: 240px;
+}
+
+#username-field {
+  margin: 0px;
+  width: 160px;
+}
+
+#form-submit {
+  display: flex;
+  align-self: flex-end;
+  padding: 8px;
+  margin-right: 13px;
+  background-color: transparent;
+  margin-bottom: 13px;
+  border: 1px solid pink;
+  padding: 15px;}
+
+#close-button {
+  display: flex;
+  align-self: flex-end;
+  padding: 8px;
+  margin-right: 13px;
+  background-color: transparent;
+  margin-bottom: 13px;
+  border: 1px solid pink;
+  padding: 1em;
+}
+
+#star {
+  fill: black;
+}
+
+
+.single-star-outline {
+  height: 20px;
+  width: 20px;
+  z-index: 0;
+}
+
+.single-star-fill {
+  position: relative;
+  display: inline-block;
+  height: 20px;
+  overflow: hidden;
+  z-index: 1;
+  background-size: 1em;
+}
+
+.single-star-container {
+  height: 20px;
+  width: 30px;
+  display: inline-block;
+  position: relative;
+}
+
+.star {
+  position: absolute;
+}
+
+#average-score {
+  display: inline-flex;
+}
+
+#star-rating {
+  padding-left: 11px;
+  padding-top: 7px;
+}
+
+#average {
+  margin-top: 14px;
+}
+
+.drop-down {
+  position: absolute;
+  margin-left: 10px;
+}
+
+.reviewTile {
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+#score-5-above {
+  position: absolute;
+  height: 10px;
+  background-color: palevioletred;
+  z-index: 1;
+}
+
+#score-4-above {
+  position: absolute;
+  height: 10px;
+  background-color: palevioletred;
+  z-index: 1;
+
+}
+
+#score-3-above {
+  position: absolute;
+  height: 10px;
+  background-color: palevioletred;
+  z-index: 1;
+
+}
+
+#score-2-above {
+  position: absolute;
+  height: 10px;
+  background-color: palevioletred;
+  z-index: 1;
+
+}
+
+#score-1-above {
+  position: absolute;
+  height: 10px;
+  background-color: palevioletred;
+  z-index: 1;
+}
+
+#score-below {
+  height: 10px;
+  width: 200px;
+  background-color:pink;
+  position: absolute;
+  z-index: 0;
+
+}
+
+#measurement-bars {
+  display: flex;
+}
+
+
+#measurements {
+  margin-top: 30px;
+}
+
+#score-count {
+  height: 35px;
+  margin-top: 15px;
+}
+
+#recommendations {
+  margin-top: 10px;
+}
+
+#bars {
+  height: 10px;
+  width: 90px;
+  background-color:pink;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+#measurement-desc {
+  display: flex;
+}
+
+#desc {
+  font-size: small;
+}
+
+#measure-average {
+  width: 0;
+  height: 2px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 12px solid palevioletred;
 }

@@ -16,6 +16,7 @@ class RelProductCard extends React.Component {
   }
   // var defaultStyle =
   handleUpdate(id) {
+    console.log('handled');
     axios.get(`/product/${id}/styles`)
       .then((response) => {
         this.setState({
@@ -23,15 +24,14 @@ class RelProductCard extends React.Component {
           currentStyle: response.data.results[0],
           thumbnailImg: response.data.results[0].photos[0].url
         })
-        return;
       })
       .catch((err) => {
         console.log(err);
       })
-
     axios.get(`/reviews/${id}`)
       .then((response) => {
         var avg = 0;
+        console.log('REVIEWS', response.data.results);
         if (response.data.results.length === 0) {
           return 0;
         } else {
@@ -60,18 +60,8 @@ class RelProductCard extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/product/${this.props.product.id}/styles`)
-      .then((response) => {
 
-        this.setState({
-          styleList: response.data.results,
-          currentStyle: response.data.results[0],
-          thumbnailImg: response.data.results[0].photos[0].url
-        })
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    this.handleUpdate(this.props.product.id);
   }
   render() {
     var { name, category, default_price } = this.props.product;
@@ -90,8 +80,9 @@ class RelProductCard extends React.Component {
     var price = !this.state.currentStyle.sale_price ? defPriceElement : saleElement;
     var thumb = this.state.thumbnailImg ? <img src={this.state.thumbnailImg} alt={this.state.currentStyle.name} className='related-card-visual-thumbnail' /> : <img className='related-card-visual-thumbnail' src={`https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081`} alt={this.state.currentStyle.name} />;
 
-    var roundedAvg = this.state.styleAvg - Math.floor(this.state.styleAvg)
+    // var roundedAvg = this.state.styleAvg - Math.floor(this.state.styleAvg)
     var review = this.state.styleAvg === 0 ? <h4 className='card-review'>No Reviews</h4> : <h4 className='card-review'>Review: {Math.round(this.state.styleAvg)}/5</h4>
+    // var review = <h4 className='card-review'>Review: {this.state.styleAvg}/5</h4>
 
     return (
       <div className='card hvr-float'>

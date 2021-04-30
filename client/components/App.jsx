@@ -1,12 +1,14 @@
 import React, { Suspense } from 'react';
 import axios from 'axios';
 
-import QA from './QA/QA.jsx'
-import Review from './Review.jsx'
+const QA = React.lazy(() => {
+  return import('./QA/QA.jsx')
+})
+const Review = React.lazy(() => {
+  return import('./Review.jsx')
+})
 
-// const QA = React.lazy(() => import('./QA/QA.jsx'))
-// const Review = React.lazy(() => import('./Review.jsx'))
-//
+// const RelProductList = React.lazy(() => import('./RelatedProdList/RelProductList.jsx'));
 import Overview from './Overview/Overview.jsx';
 import RelProductList from './RelatedProdList/RelProductList.jsx';
 import Navbar from './Navbar/Navbar.jsx'
@@ -159,16 +161,17 @@ class App extends React.Component {
             <Overview zoomExtended={this.state.zoomExtended} extendedView={this.state.extendedView} handleMainImageClick={this.handleMainImageClick} productScore={this.state.averageScore} numReviews={this.state.reviewCount} getCart={this.fetchCart} id='overview' product={this.state.currentProduct} />
           </section>
           <section aria-label="related-products" id="lists">
+
+
             <RelProductList id="related-products" productId={this.state.currentProduct.id} toggleComparison={this.comparisonToggle} changePage={this.productStateChange} />
+
           </section>
-          <section aria-label="questions">
-            <Suspense fallback={<div></div>}>
-            <QA id='questions' productId={this.state.currentProduct.id} name={this.state.currentProduct.name} />
+          <section aria-label="questions and ratings">
+            <Suspense fallback={<div>Loading</div>}>
+              <QA id='qa' productId={this.state.currentProduct.id} name={this.state.currentProduct.name} />
             </Suspense>
-          </section>
-          <section aria-label="reviews">
-            <Suspense fallback={<div></div>}>
-            <Review id='review's item={this.state.currentProduct.id} getScore={this.getScore} />
+            <Suspense fallback={<div>Loading</div>}>
+              <Review id='review' item={this.state.currentProduct.id} getScore={this.getScore} />
             </Suspense>
           </section>
         </div>

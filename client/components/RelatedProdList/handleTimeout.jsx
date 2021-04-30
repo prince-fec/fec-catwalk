@@ -17,4 +17,10 @@ export function handleTimout(cb, delay) {
       return () => clearInterval(id);
     }
   }, [delay])
+
+  return (
+    <div>
+      <h1>Hi</h1>
+    </div>
+  )
 }

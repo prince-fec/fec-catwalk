@@ -19,7 +19,7 @@ class ReviewsList extends React.Component {
     if (this.props.data[0] !== prevProps.data[0]) {
       this.setState({
         reviews: this.props.data,
-        count: this.props.data.count
+        count: this.props.count
       })
     }
   }
@@ -34,13 +34,13 @@ class ReviewsList extends React.Component {
   render() {
     return (
       <div id='review-container'>
-      <div className='review-list'> {this.props.data.count} reviews, sort by
+      <div className='review-list'> {this.state.count} reviews, sort by
         <select onChange={this.onChange} className='drop-down'>
           <option value='relevant'>relevance</option>
           <option value='helpful'>helpfulness</option>
           <option value='newest'>new to old</option>
         </select>
-        <ReviewTiles data={[this.state.sort, this.props.data]}/>
+        <ReviewTiles data={[this.state.sort, this.props.data]} count={this.props.count} product={this.props}/>
       </div>
       </div>
     )

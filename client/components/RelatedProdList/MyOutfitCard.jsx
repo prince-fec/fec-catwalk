@@ -4,8 +4,6 @@ import axios from 'axios';
 const MyOutfitCard = (props) => {
   var { name, category, default_price, id } = props.product;
   var price = '$' + default_price.split('.').slice(0, 1).join('');
-  // const { outfitDelete } = props;
-  console.log(props);
   const [outfitList, loadOutfit] = useState([]);
   useEffect(() => {
     axios.get(`/product/${id}/styles`)

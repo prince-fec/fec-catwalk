@@ -87,8 +87,10 @@ class RelProductList extends React.Component {
     })
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.productId !== prevProps.productId) {
+  componentDidUpdate(prevProps, prevState) {
+    prevState = JSON.stringify(prevState);
+    var currentState = JSON.stringify(this.state);
+    if (prevProps.productId !== this.props.productId) {
       this.handleRelatedProductUpdates(this.props.productId);
       axios.get(`/products/outfits`)
         .then((response) => {
@@ -103,8 +105,8 @@ class RelProductList extends React.Component {
       rel_products: []
     })
   }
-  render() {
 
+  render() {
     return (
       <>
         <div className='view'>
@@ -132,7 +134,6 @@ class RelProductList extends React.Component {
           }} />
           <div className='list outfit-list'>
             <div className='list-content'>
-
               <div className='card outfit-card hvr-float'>
                 <div className='outfit-add' onClick={(e) => {
                   axios.post(`/products/${this.props.productId}/outfits`)
