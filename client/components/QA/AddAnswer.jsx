@@ -135,12 +135,12 @@ class AddAnswer extends React.Component {
           <div className='close' onClick={() => this.props.close(false)}>+</div>
           <div className='form-title'>Your Answer has been submitted !</div>
           <div className='mini-title'>Thanks for visiting!</div>
-          <img className='form-img-submitted' src='./../../../assets/Catwalk.svg'></img>
-        </div> : <div className='innerForma'>
-          <div className='close' onClick={() => this.props.close(false)}>+</div>
-          <div className='form-title'>{this.state.submit}</div>
-          <div className='mini-title'>{this.props.name} : {this.props.question}</div>
-          <label>Answer*
+          <img className='form-img-submitted' src='./../../../assets/Catwalk.svg' alt='catwalk logo'></img>
+          </div> :  <div className='innerForma'>
+        <div className='close' onClick={() => this.props.close(false)}>+</div>
+        <div className='form-title'>{this.state.submit}</div>
+        <div className='mini-title'>{this.props.name} : {this.props.question}</div>
+        <label>Answer*
           <div className='error'>{this.state.answerError}</div>
             <textarea type='text' value={this.state.answer} onChange={this.handleAnswer} placeholder='add answer here...'></textarea>
           </label>
