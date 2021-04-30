@@ -8,6 +8,7 @@ import Answer from './Answer.jsx'
 import AddQuestion from './AddQuestion.jsx'
 import AddAnswer from './AddAnswer.jsx'
 import Ans from './Ans.jsx'
+import withClick from './../HOC/WithClick.js';
 
 
 
@@ -112,4 +113,4 @@ class QA extends React.Component {
   }
 }
 
-export default QA
+export default withClick(QA);

@@ -1,4 +1,5 @@
 import React from 'react';
+import withClick from './../HOC/WithClick.js'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +10,7 @@ import css from './Navbar.css'
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ numItemsInCart, themeButton }) => (
   <div className='navbar-container'>
-    <img src='./../../../assets/Catwalk.svg'></img>
+    <img alt='catwalk logo' src='./../../../assets/Catwalk.svg'></img>
     {themeButton}
     <div>
       <div id='cart-container'>
@@ -20,4 +21,4 @@ const Navbar = ({ numItemsInCart, themeButton }) => (
   </div>
 )
 
-export default Navbar;
+export default withClick(Navbar);

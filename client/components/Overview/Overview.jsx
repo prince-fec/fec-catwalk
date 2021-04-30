@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 // eslint-disable-next-line no-unused-vars
-// import css from './Overview.css'
+import css from './Overview.css'
 import ImageDisplay from './ImageDisplay.jsx'
 import ProductInfo from './ProductInfo.jsx'
+import withClick from './../HOC/WithClick.js'
 
 import axios from 'axios';
 
@@ -19,7 +20,6 @@ class Overview extends React.Component {
       currentThumbnail: 0,
       product: [],
       sku: '',
-      extendedView: false
     }
     this.onArrowDownClick = this.onArrowDownClick.bind(this);
     this.onArrowUpClick = this.onArrowUpClick.bind(this);
@@ -35,20 +35,18 @@ class Overview extends React.Component {
   // Arrow function account for only 14 icons - will need to adjust the logic for more item
   onArrowDownClick() {
     if (this.state.thumbnailsShown[1] < this.state.thumbnails.length) {
-      const diff = this.state.thumbnails.length - this.state.thumbnailsShown[1];
+      // const diff = this.state.thumbnails.length - this.state.thumbnailsShown[1];
       this.setState({
-        thumbnailsShown: [diff, this.state.thumbnailsShown[1] + diff],
-        currentThumbnail: diff
+        thumbnailsShown: [this.state.thumbnailsShown[0] + 1, this.state.thumbnailsShown[1] + 1],
       })
     }
   }
 
   onArrowUpClick() {
-    const diff = this.state.thumbnails.length - this.state.thumbnailsShown[0];
+    // const diff = this.state.thumbnails.length - this.state.thumbnailsShown[0];
     if (this.state.thumbnailsShown[0] > 0) {
       this.setState({
-        thumbnailsShown: [0, diff],
-        currentThumbnail: 0
+        thumbnailsShown: [this.state.thumbnailsShown[0] - 1, this.state.thumbnailsShown[1] - 1],
       })
     }
   }
@@ -89,8 +87,8 @@ class Overview extends React.Component {
 
   handleMainImageClick() {
     this.setState({
-      extendedView: !this.state.extendedView
-    }, () => console.log(this.state.extendedView))
+      extendedView: true
+    })
   }
 
   fetchThumbnails() {
@@ -118,10 +116,9 @@ class Overview extends React.Component {
     }
   }
 
-  handleAddToCart(e, sku, quantity) {
+  handleAddToCart(e, sku) {
     e.preventDefault();
-    console.log(sku, quantity)
-    axios.post('/cart', { sku }).then(() => {
+    axios.post('/cart', {sku}).then(() => {
       this.props.getCart()
     })
       .catch((err) => {
@@ -130,10 +127,10 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { thumbnails, thumbnailsShown, styles, currentStyle, currentThumbnail, extendedView } = this.state;
-    const { product, productScore, numReviews } = this.props
-    const { handleThumbnailClick, onArrowDownClick, onArrowLeftClick, onArrowRightClick, onArrowUpClick, handleStyleClick, handleAddToCart, handleMainImageClick } = this;
-    const overviewProps = { thumbnails, thumbnailsShown, styles, currentStyle, currentThumbnail, handleThumbnailClick, onArrowDownClick, onArrowLeftClick, onArrowRightClick, onArrowUpClick, product, handleMainImageClick, extendedView }
+    const { thumbnails, thumbnailsShown, styles, currentStyle, currentThumbnail } = this.state;
+    const { product, productScore, numReviews, handleMainImageClick, extendedView, zoomExtended } = this.props
+    const { handleThumbnailClick, onArrowDownClick, onArrowLeftClick, onArrowRightClick, onArrowUpClick, handleStyleClick, handleAddToCart } = this;
+    const overviewProps = { thumbnails, thumbnailsShown, styles, currentStyle, currentThumbnail, handleThumbnailClick, onArrowDownClick, onArrowLeftClick, onArrowRightClick, onArrowUpClick, product, handleMainImageClick, extendedView, zoomExtended }
 
     return product ?
       (
@@ -148,11 +145,11 @@ class Overview extends React.Component {
       )
       :
       (
-        <div>
+        <div className='no-products'>
           <span>Sorry no products selected</span>
         </div>
       )
   }
 }
 
-export default Overview;
+export default withClick(Overview, );

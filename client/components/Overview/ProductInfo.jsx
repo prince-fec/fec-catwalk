@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import Rating from 'react-star-ratings';
+import StarRating from './../RatingStar.jsx';
 
 class ProductInfo extends React.Component {
   constructor(props) {
@@ -96,16 +96,16 @@ class ProductInfo extends React.Component {
   render() {
     const { product, styles, currentStyle, handleStyleClick, isExtendedView, numReviews} = this.props;
     const { name, default_price, category } = this.props.product
-    const { isDisabled, totalQuantity, selectedQuantity } = this.state;
+    const { isDisabled, totalQuantity } = this.state;
     const buttonClass = isDisabled ? 'checkout-input' : 'hvr-back-pulse checkout-input'
     const forgotSize = this.state.forgotSize ? 'forgotSize' : 'hidden-button'
     const productInformationClass = isExtendedView ? 'prod-info-extended' : 'product-information';
     let count = 0;
+    console.log(this.props.averageScore)
     const styleDropdown = styles[currentStyle] && Object.entries(styles[currentStyle].skus).filter(([, entry]) => entry.size !== 0).map(([key, entry]) => {
       count+=entry.quantity
       return <option key={key} value={entry.size}>{entry.size}</option>
     })
-    console.log(this.props.averageScore)
     return product && styles[currentStyle] ?
     (
       <div className={productInformationClass}>
@@ -132,8 +132,7 @@ class ProductInfo extends React.Component {
           {/* Product information */}
         </div>
         <h5>Read all <a style={{color: 'grey'}} href='#review-container'>{numReviews || 0}</a> reviews</h5>
-        <Rating rating={this.props.averageScore} numberOfStars={5}
-        starSpacing="3px" starDimension="15px" starRatedColor='black'/>
+        <StarRating rating={this.props.averageScore} />
         <h5>{category}</h5>
         <h3>{name}</h3>
         {/* Conditionally rendering prices based on whether or not there is a sale */}
@@ -163,12 +162,12 @@ class ProductInfo extends React.Component {
                   {
                     style.photos[0].thumbnail_url ?
                     <>
-                    <img className='styles__photo hvr-glow' alt={style.name} onClick={() => handleStyleClick(idx)} src={style.photos[0].thumbnail_url}></img>
-                    <h6 onClick={() => handleStyleClick(idx)} >{style.name}</h6>
+                    <img className='styles__photo hvr-glow' alt='' onClick={() => handleStyleClick(idx)} src={style.photos[0].thumbnail_url}></img>
+                    <h5 onClick={() => handleStyleClick(idx)} >{style.name}</h5>
                     </>
                     :
                     <div className='styles__photo hvr-glow' onClick={() => handleStyleClick(idx)}>
-                      <h6 onClick={() => handleStyleClick(idx)} >{style.name}</h6>
+                      <h5 onClick={() => handleStyleClick(idx)} >{style.name}</h5>
                     </div>
                   }
 

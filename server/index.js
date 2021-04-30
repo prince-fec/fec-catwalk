@@ -21,6 +21,7 @@ app.get('/products', (req, res) => {
   axios.get(requests.products)
     .then((response) => {
       res.send(response.data)
+      console.log(response.data)
     })
     .catch((err) => {
       res.status(err.response.status);

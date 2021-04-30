@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import ReviewsList from './ReviewsList.jsx';
 import ReviewSummary from './ReviewSummary.jsx';
+import css from './Review.css';
+import withClick from './HOC/WithClick.js';
 
 
 class Review extends React.Component {
@@ -54,4 +56,4 @@ class Review extends React.Component {
   }
 }
 
-export default Review;
+export default withClick(Review);
