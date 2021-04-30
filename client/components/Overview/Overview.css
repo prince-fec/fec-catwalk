@@ -42,6 +42,8 @@
   box-shadow: 5px 7px 20px 1px rgba(0, 0, 0, 0.40);
 }
 
+.zoom-extended
+
 .image-container:hover {
   cursor: zoom-in
 }
@@ -114,6 +116,13 @@
   position: absolute;
   max-width: -webkit-fill-available;
   width: -webkit-fill-available;
+}
+
+.main_image___extended {
+  position: absolute;
+  max-width: -webkit-fill-available;
+  width: -webkit-fill-available;
+  transform: scale(1.5);
 }
 
 .product-information {

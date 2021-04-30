@@ -20,7 +20,6 @@ class Overview extends React.Component {
       currentThumbnail: 0,
       product: [],
       sku: '',
-      extendedView: false
     }
     this.onArrowDownClick = this.onArrowDownClick.bind(this);
     this.onArrowUpClick = this.onArrowUpClick.bind(this);
@@ -129,9 +128,9 @@ class Overview extends React.Component {
 
   render() {
     const { thumbnails, thumbnailsShown, styles, currentStyle, currentThumbnail } = this.state;
-    const { product, productScore, numReviews, handleMainImageClick, extendedView } = this.props
+    const { product, productScore, numReviews, handleMainImageClick, extendedView, zoomExtended } = this.props
     const { handleThumbnailClick, onArrowDownClick, onArrowLeftClick, onArrowRightClick, onArrowUpClick, handleStyleClick, handleAddToCart } = this;
-    const overviewProps = { thumbnails, thumbnailsShown, styles, currentStyle, currentThumbnail, handleThumbnailClick, onArrowDownClick, onArrowLeftClick, onArrowRightClick, onArrowUpClick, product, handleMainImageClick, extendedView }
+    const overviewProps = { thumbnails, thumbnailsShown, styles, currentStyle, currentThumbnail, handleThumbnailClick, onArrowDownClick, onArrowLeftClick, onArrowRightClick, onArrowUpClick, product, handleMainImageClick, extendedView, zoomExtended }
 
     return product ?
       (
@@ -146,7 +145,7 @@ class Overview extends React.Component {
       )
       :
       (
-        <div>
+        <div className='no-products'>
           <span>Sorry no products selected</span>
         </div>
       )

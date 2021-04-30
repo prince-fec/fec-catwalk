@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import axios from 'axios';
 
 import QA from './QA/QA.jsx'
 import Review from './Review.jsx'
+
+// const QA = React.lazy(() => import('./QA/QA.jsx'))
+// const Review = React.lazy(() => import('./Review.jsx'))
 //
 import Overview from './Overview/Overview.jsx';
 import RelProductList from './RelatedProdList/RelProductList.jsx';
@@ -24,8 +27,10 @@ class App extends React.Component {
       cart: [],
       numItemsInCart: 0,
       theme_status: 'dark',
-      extendedView: false
+      extendedView: false,
+      zoomExtended: false,
     }
+
     this.productStateChange = this.productStateChange.bind(this);
     this.comparisonToggle = this.comparisonToggle.bind(this);
     this.getScore = this.getScore.bind(this);
@@ -71,7 +76,11 @@ class App extends React.Component {
   handleMinimizeImage(e) {
     e.persist();
     // console.log(e.target.className)
-    if (this.state.extendedView && e.target.className !== 'image-container__main-image') {
+    if (e.target.className === 'image-container__main-image' || e.target.className === 'main_image___extended') {
+      return;
+    }
+
+    if (this.state.extendedView) {
       this.setState({
         extendedView: false
       })
@@ -84,6 +93,12 @@ class App extends React.Component {
         extendedView: true
       })
     }
+    if (this.state.extendedView) {
+      console.log('here')
+      this.setState({
+      zoomExtended: !this.state.zoomExtended
+    })
+  }
   }
 
   productStateChange(data) {
@@ -141,16 +156,20 @@ class App extends React.Component {
         </section>
         <div onClick={(e) => this.handleMinimizeImage(e)} className="product-page-viewer">
           <section aria-label="overview">
-            <Overview extendedView={this.state.extendedView} handleMainImageClick={this.handleMainImageClick} productScore={this.state.averageScore} numReviews={this.state.reviewCount} getCart={this.fetchCart} id='overview' product={this.state.currentProduct} />
+            <Overview zoomExtended={this.state.zoomExtended} extendedView={this.state.extendedView} handleMainImageClick={this.handleMainImageClick} productScore={this.state.averageScore} numReviews={this.state.reviewCount} getCart={this.fetchCart} id='overview' product={this.state.currentProduct} />
           </section>
           <section aria-label="related-products" id="lists">
             <RelProductList id="related-products" productId={this.state.currentProduct.id} toggleComparison={this.comparisonToggle} changePage={this.productStateChange} />
           </section>
           <section aria-label="questions">
+            <Suspense fallback={<div></div>}>
             <QA id='questions' productId={this.state.currentProduct.id} name={this.state.currentProduct.name} />
+            </Suspense>
           </section>
           <section aria-label="reviews">
+            <Suspense fallback={<div></div>}>
             <Review id='review's item={this.state.currentProduct.id} getScore={this.getScore} />
+            </Suspense>
           </section>
         </div>
 

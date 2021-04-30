@@ -1,4 +1,5 @@
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { expect } from 'chai'
 import React from 'react';
 import '../setupTest'
 import Overview from '../client/components/Overview/Overview.jsx';
@@ -17,10 +18,11 @@ describe('<Overview />', () => {
   //   "updated_at": "2021-02-23T19:24:34.450Z"
   // }
   it('renders seven children to the DOM', () => {
-    setTimeout(() => {
-      const wrapper = shallow(<Overview />);
-      console.log(wrapper);
-      expect(wrapper.find(Overview)).toEqual(7);
-    }, 2000)
+      const wrapper = mount((
+        <Overview />
+      ));
+      // await wrapper.instance().componentDidUpdate();
+      expect(wrapper.find('.no-products').exists()).to.equal(true)
+      // expect(wrapper.find('.overview-container').exists()).to.equal(true)
   })
 })
