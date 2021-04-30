@@ -8,6 +8,7 @@
   left: 0;
   right: 0;
   background-color : rgba(0, 0, 0, 0.8);
+  z-index: 100;
 }
 
 .answerform{
@@ -19,7 +20,7 @@
   left: 0;
   right: 0;
   background-color : rgba(0, 0, 0, 0.8);
-
+  z-index: 100;
 }
 
 .innerForm {
@@ -282,4 +283,12 @@ margin-left: 0.4em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+#highlight {
+background-color: yellow !important;
+}
+
+#unhighlight {
+  background-color: none;
 }

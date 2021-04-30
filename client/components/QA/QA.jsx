@@ -20,13 +20,15 @@ class QA extends React.Component {
       useData: [],
       amount: 2,
       clicked: false,
-      more: true
+      more: true,
+      isLoading: false
     }
     this.handleQuestions = this.handleQuestions.bind(this);
     this.handleMoreQuestions = this.handleMoreQuestions.bind(this);
     this.handleClicked = this.handleClicked.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.resetData = this.resetData.bind(this);
+    this.handleLoadQuestion = this.handleLoadQuestion.bind(this);
   }
 
   handleQuestions() {
@@ -85,22 +87,28 @@ class QA extends React.Component {
     })
   }
 
+  handleLoadQuestion () {
+    this.setState({
+      isLoading: true
+    })
+  }
+
 
   render() {
-    return (
-      <div className='QA-ctn'>
-        <span className='main-heading'>QUESTIONS &#38; ANSWERS</span>
-        <br></br>
-        <QuestionBar questions={this.state.useData} update={this.handleUpdate} reset={this.resetData} />
-        <br></br>
-        {this.state.data.length > 0 ? <QuestionList name={this.props.name} productId={this.props.productId} questions={this.state.data.slice(0, this.state.amount)} update={this.handleUpdate} /> : null}
-        <div className='button'>
-          {this.state.data.length > 2 && this.state.more ? <button className='button1' onClick={this.handleMoreQuestions}>MORE ANSWERED QUESTIONS</button> : null}
-          <button className='button2' onClick={() => this.handleClicked(true)}>ADD A QUESTION</button>
-        </div>
-        {this.state.clicked ? <AddQuestion name={this.props.name} id={this.props.productId} close={this.handleClicked} update={this.handleUpdate} /> : null}
-      </div>
-    )
+   return (
+    <div className='QA-ctn'>
+    <span className='main-heading'>QUESTIONS &#38; ANSWERS</span>
+    <br></br>
+    <QuestionBar questions={this.state.useData} update={this.handleUpdate} reset={this.resetData}/>
+    <br></br>
+    {this.state.data.length > 0 ? <QuestionList name={this.props.name} productId={this.props.productId} questions={this.state.data.slice(0,this.state.amount)} update={this.handleUpdate} data={this.state.data}handleMoreQuestions = {this.handleMoreQuestions} isLoading={this.state.isLoading}/> : null}
+    <div className='button'>
+    {this.state.data.length > 2 && this.state.more && !this.state.isLoading ? <button className='button1' onClick={this.handleLoadQuestion}>MORE ANSWERED QUESTIONS</button> : null}
+    <button className='button2' onClick={() => this.handleClicked(true)}>ADD A QUESTION</button>
+    </div>
+    {this.state.clicked ? <AddQuestion name={this.props.name} id={this.props.productId} close={this.handleClicked} update={this.handleUpdate}/> : null}
+  </div>
+   )
   }
 }
 

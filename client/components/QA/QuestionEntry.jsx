@@ -96,7 +96,7 @@ class QuestionEntry extends React.Component {
   render() {
     return (
       <div>
-        <div className='question'>Q:{'  ' + this.props.question.question_body}</div>
+        <div className='question'>Q:{this.props.question.question_body}</div>
         <div className='questionLink'>
           <div className='link-helpful'>helpful? <span onClick={this.handleHelpful}>Yes</span>({this.props.question.question_helpfulness}) </div>
           <div className='link-answe' onClick={() => this.handleClickForm(true)}> Add Answer</div>
