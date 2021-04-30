@@ -1,12 +1,14 @@
 import React, { Suspense } from 'react';
 import axios from 'axios';
+import QA from './QA/QA.jsx';
+import Review from './Review.jsx'
 
-const QA = React.lazy(() => {
-  return import('./QA/QA.jsx')
-})
-const Review = React.lazy(() => {
-  return import('./Review.jsx')
-})
+// const QA = React.lazy(() => {
+//   return import('./QA/QA.jsx')
+// })
+// const Review = React.lazy(() => {
+//   return import('./Review.jsx')
+// })
 
 // const RelProductList = React.lazy(() => import('./RelatedProdList/RelProductList.jsx'));
 import Overview from './Overview/Overview.jsx';
@@ -69,10 +71,18 @@ class App extends React.Component {
     })
   }
   getScore(count, score) {
-    this.setState({
+    console.log(count, score)
+    if (this.state.reviewCount !== count) {
+      this.setState({
       reviewCount: count,
       averageScore: score
     })
+    } else {
+      this.setState({
+        reviewCount: 0,
+        averageScore: 0
+      })
+    }
   }
 
   handleMinimizeImage(e) {

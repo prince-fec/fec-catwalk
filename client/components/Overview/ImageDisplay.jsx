@@ -15,15 +15,6 @@ import { faArrowDown, faArrowUp, faAngleRight, faAngleLeft } from '@fortawesome/
 
 const ImageDisplay = ({ thumbnails, thumbnailsShown, styles, currentStyle, currentThumbnail, handleThumbnailClick, onArrowDownClick, onArrowLeftClick, onArrowRightClick, onArrowUpClick, product, handleMainImageClick, extendedView, zoomExtended }) => {
 
-  const handleImageHover = (e) => {
-    e.persist()
-    if (zoomExtended) {
-      console.log(this)
-      window.scroll(0, 100)
-    }
-    console.log(e)
-  }
-
   const placeholder = 'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081'
   // styles[currentStyle]  && console.log(styles[currentStyle].photos)
   const addDefault = (ev) => {
@@ -46,7 +37,6 @@ const ImageDisplay = ({ thumbnails, thumbnailsShown, styles, currentStyle, curre
       {
         styles[currentStyle] ?
           <img
-          onMouseEnter={(e) => handleImageHover(e)}
           className={mainImageClassname}
           onError={addDefault}
           onClick={

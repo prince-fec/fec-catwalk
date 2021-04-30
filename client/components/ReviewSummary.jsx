@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Rating from 'react-star-ratings';
-// import Chart from 'Chart.js';
+import Chart from 'Chart.js';
 import Star from './RatingStar.jsx';
 
 class ReviewSummary extends React.Component {
