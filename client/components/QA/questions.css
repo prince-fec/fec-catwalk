@@ -11,6 +11,11 @@
   z-index: 100;
 }
 
+/* .example::-webkit-scrollbar {
+  display: none;
+} */
+
+
 .answerform{
   padding-top: 5%;
   padding-left: 35%;
