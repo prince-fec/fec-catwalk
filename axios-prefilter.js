@@ -11,7 +11,7 @@ const requests = {
   cart: `https://app-hrsei-api.herokuapp.com/api/fec2/${CAMPUS_CODE}/cart`,
   questions: `https://app-hrsei-api.herokuapp.com/api/fec2/${CAMPUS_CODE}/qa/questions`,
   rel_products: `https://app-hrsei-api.herokuapp.com/api/fec2/${CAMPUS_CODE}/products/:product_id/related`,
-  answers: `https://app-hrsei-api.herokuapp.com/api/fec2/${CAMPUS_CODE}/qa/answers`
-}
+  answers: `https://app-hrsei-api.herokuapp.com/api/fec2/${CAMPUS_CODE}/qa/answers`,
+};
 
 module.exports = requests;

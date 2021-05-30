@@ -100,6 +100,7 @@ class ProductInfo extends React.Component {
     const buttonClass = isDisabled ? 'checkout-input' : 'hvr-back-pulse checkout-input'
     const forgotSize = this.state.forgotSize ? 'forgotSize' : 'hidden-button'
     const productInformationClass = isExtendedView ? 'prod-info-extended' : 'product-information';
+    console.log(styles[currentStyle] && styles[currentStyle].sale_price)
     let count = 0;
     console.log(this.props.averageScore)
     const styleDropdown = styles[currentStyle] && Object.entries(styles[currentStyle].skus).filter(([, entry]) => entry.size !== 0).map(([key, entry]) => {
